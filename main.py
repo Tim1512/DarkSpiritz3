@@ -149,7 +149,7 @@ def main():
         elif terminal[0:21] == "retarget":
             retarget.edit()
             main()
-        elif terminal[0:17] == 'show' + terminal[5:]:
+        elif terminal[0:17] == 'show ' + terminal[5:]:
             print("")
             print("Plugin Category: " + terminal[5:])
             print("==============================\n")
@@ -162,11 +162,11 @@ def main():
                     data = myfile.read().splitlines()
                     desc = data[0]
                     datar = desc.replace("Description = '", "")
-                    x = datar.rstrip("'")
-                    bb = line.split(terminal[5:] + '/')[1].split('.plugin')[0]
-                    if x == "#!/usr/bin/python":
-                        x = "\033[1;91mDescription has not yet been implemented.\033[1;m"
-                        print(" %s\t   %s" % (bb,x))
+                x = datar.rstrip("'")
+                bb = line.split(terminal[9:] + '/')[1].split('.plugin')[0]
+                if x == "#!/usr/bin/python3":
+                    x = "\033[1;91mDescription has not yet been implemented.\033[1;m"
+                print(" %s\t   %s" % (bb,x))
             print(" ")
             main()
         elif terminal[0:] == 'session':
@@ -225,21 +225,18 @@ Plugin Category
  Name
  ----""")
     for d in glob.iglob('*'):
-        if "CONTRIBUTING.md" not in d:
-            if ".travis.yml" not in d:
                 if "requirements.txt" not in d:
                     if "LICENSE" not in d:
                         if "README.md" not in d:
-                            if "lib" not in d:
-                                if "installer.py" not in d:
-                                    if "main.py" not in d:
-                                        if "banners" not in d:
-                                            if "core" not in d:
-                                                if "Resources" not in d:
-                                                    if "storage" not in d:
-                                                        if "modules" not in d:
-                                                            print(""" %s""" % (d))
-                                                            print("")
+                            if "installer.py" not in d:
+                                if "main.py" not in d:
+                                    if "banners" not in d:
+                                        if "core" not in d:
+                                            if "Resources" not in d:
+                                                if "storage" not in d:
+                                                    if "modules" not in d:
+                                                        print(""" %s""" % (d))
+    print("")
 
 if __name__=='__main__':
     main()

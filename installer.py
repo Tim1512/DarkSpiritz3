@@ -17,15 +17,14 @@ class colors:
     HH = '\033[1m'
 
 def Command_exe(msg,cmd):
-    	i = "\033[1mSTATUS"+colors.W+":[Processing]"
-	stdout.write(" " + msg + " %s" % i)
-	stdout.flush()
-	if subprocess.call(cmd+' >/dev/null 2>&1', shell=True)==0:
-		i = "[\033[1m"+colors.G+"OK"+colors.W+"]"
-	else:
-		i = "["+colors.R+"\033[1mERROR"+colors.W+"]["+colors.O+"\033[1mWARNING"+colors.W+"]"
-
-	stdout.write("\r " + msg +" STATUS:%s" % i)
+    i = "\033[1mSTATUS"+colors.W+":[Processing]"
+    stdout.write(" " + msg + " %s" % i)
+    stdout.flush()
+    if subprocess.call(cmd+' >/dev/null 2>&1', shell=True)==0:
+        i = "[\033[1m"+colors.G+"OK"+colors.W+"]"
+    else:
+        i = "["+colors.R+"\033[1mERROR"+colors.W+"]["+colors.O+"\033[1mWARNING"+colors.W+"]"
+    stdout.write("\r " + msg +" STATUS:%s" % i)
 
 class banner:
     logo = colors.G + """
@@ -82,27 +81,75 @@ class banner:
                                     .++-ohsy::::-         .-:`````
                                         ..."""
 
-print banner.logo
+print(banner.logo)
 
 if os.getuid() != 0:
-    	print(" ["+colors.R+"-"+colors.W+"] ERROR:"+colors.B+" Install"+colors.B+" must be run as "+colors.R+"root"+colors.W+".")
-	print(" ["+colors.R+"-"+colors.W+"] login as root ("+colors.R+"sudo"+colors.W+") or try "+colors.W+"sudo python installer.py"+colors.W+"\n")
-	exit(1)
+    print(" ["+colors.R+"-"+colors.W+"] ERROR:"+colors.B+" Install"+colors.B+" must be run as "+colors.R+"root"+colors.W+".")
+    print(" ["+colors.R+"-"+colors.W+"] login as root ("+colors.R+"sudo"+colors.W+") or try "+colors.W+"sudo python4 installer.py"+colors.W+"\n")
+    exit(1)
 
 time.sleep(1)
-print(Command_exe("["+time.strftime('%H:%M:%S')+"] Making python2 as default.                 ",'mv /usr/bin/python2 /usr/bin/python'))
-print(Command_exe("["+time.strftime('%H:%M:%S')+"] Fixing python3.                 ",'mv /usr/bin/python3 /usr/bin/python3'))
 
 
-print(colors.B   + """\n)
+print(colors.B   + """\n
 1. ArchLinux
 2. Debian/Ubuntu/Kali
 3. Fedora
-4. WSL Debian/Ubuntu/Kali (Some plugins may not work correctly. A VM would be optimal)
-"""
+4. WSL Debian/Ubuntu
+5. WSL Kali
+""")
 try:
-    options = raw_input("os > ")
+    options = input("os > ")
     os.system('clear')
     worked = False
     if options == "1":
-        print()
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing wine and winetricks.                    ",'pacman -S wine winetricks'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'pacman -S android-tools-adb'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'pacman -S android-tools-fastboot'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing other.                                  ",'pacman -S aircrack-ng telnet'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing python modules.                         ",'pip install -r requirements.txt --user'))
+        worked = True
+        if worked == True:
+            print("Installation completed successfully! Starting DarkSpiritz..")
+            os.system('python3 main.py')
+    if options == "2":
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing wine and winetricks.                    ",'sudo apt-get install wine winetricks'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'sudo apt-get install android-tools-adb'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'sudo apt-get install android-tools-fastboot'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing other.                                  ",'sudo apt-get install aircrack-ng nmap telnet'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing python modules.                         ",'pip install -r requirements.txt --user'))
+        worked = True
+        if worked == True:
+            print("Installation completed successfully! Starting DarkSpiritz..")
+            os.system('python3 main.py')
+    if options == "3":
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing wine and winetricks.                    ",'dnf wine winetricks'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'dnf android-tools-adb'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'dnf android-tools-fastboot'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing other.                                  ",'dnf aircrack-ng telnet'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing python modules.                         ",'pip install -r requirements.txt --user'))
+        worked = True
+        if worked == True:
+            print("Installation completed successfully! Starting DarkSpiritz..")
+            os.system('python3 main.py')
+    if options == "4":
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'sudo apt-get install android-tools-adb'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'sudo apt-get install android-tools-fastboot'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing required tools.                         ",'sudo apt-get install aircrack-ng nmap telnet'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing python modules.                         ",'pip install -r requirements.txt --user'))
+        worked = True
+        if worked == True:
+            print("Installation completed successfully! Starting DarkSpiritz..")
+            os.system('python3 main.py')
+    if options == "5":
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'sudo apt-get install android-tools-adb'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing android-tools-adb.                      ",'sudo apt-get install android-tools-fastboot'))
+        print(Command_exe("["+time.strftime('%H:%M:%S')+"] Installing python modules.                         ",'pip install -r requirements.txt --user'))
+        worked = True
+        if worked == True:
+            print("Installation completed successfully! Starting DarkSpiritz..")
+            os.system('python3 main.py')
+    else:
+        sys.exit()
+except KeyboardInterrupt:
+    sys.exit()
