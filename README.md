@@ -1,4 +1,4 @@
 # DarkSpiritz3
 Python3 version of DarkSpiritz Framework.
 
-# CURRENTLY UNDER DEVELOPEMNT. NOT ALL EXPLOITS, PAYLOADS, UTILITIES, OR EVEN THE FRAMEWORK ITSELF WILL BE WORKING 100%! USE DSPy2 FOR NOW!
+# DarkSpiritz3 is now the main DarkSpiritz. Disregard this repository.
